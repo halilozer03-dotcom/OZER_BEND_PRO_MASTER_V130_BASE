@@ -14,11 +14,13 @@
   "dependencies": {
     "@capacitor/android": "latest",
     "@capacitor/core": "latest",
+    "@capacitor/filesystem": "^8.1.2",
+    "@capacitor/share": "^8.0.1",
     "@vitejs/plugin-react": "latest",
-    "vite": "latest",
+    "jspdf": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "jspdf": "latest"
+    "vite": "latest"
   },
   "devDependencies": {
     "@capacitor/cli": "latest"
