@@ -1,3 +1,5 @@
+import { Filesystem, Directory } from "@capacitor/filesystem";
+import { Share } from "@capacitor/share";
 import { jsPDF } from "jspdf";
 
 function safeNumber(value, fallback = 0) {
@@ -15,34 +17,53 @@ function makeFileName(data) {
   return `ozer-bend-pro-${name}-${stamp}.pdf`;
 }
 
+
+function blobToBase64(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(String(reader.result).split(",")[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
 async function outputPdf(doc, fileName, action = "save") {
   const blob = doc.output("blob");
+  const isNative = !!window.Capacitor;
+
+  if (isNative) {
+    const safeName = fileName || "ozer-bend-pro.pdf";
+    const base64 = await blobToBase64(blob);
+
+    await Filesystem.writeFile({
+      path: safeName,
+      data: base64,
+      directory: Directory.Cache
+    });
+
+    const uri = await Filesystem.getUri({
+      path: safeName,
+      directory: Directory.Cache
+    });
+
+    await Share.share({
+      title: "ÖZER BEND PRO PDF",
+      text: action === "print"
+        ? "PDF hazır. Yazdırmak için açılan uygulamada Yazdır seç."
+        : "ÖZER BEND PRO teknik çizim PDF",
+      url: uri.uri,
+      dialogTitle: action === "print" ? "PDF yazdır / aç" : "PDF paylaş"
+    });
+
+    return;
+  }
 
   if (action === "print") {
     const url = URL.createObjectURL(blob);
-    const iframe = document.createElement("iframe");
-    iframe.style.position = "fixed";
-    iframe.style.right = "0";
-    iframe.style.bottom = "0";
-    iframe.style.width = "0";
-    iframe.style.height = "0";
-    iframe.style.border = "0";
-    iframe.src = url;
-    document.body.appendChild(iframe);
-    iframe.onload = () => {
-      setTimeout(() => {
-        try {
-          iframe.contentWindow?.focus();
-          iframe.contentWindow?.print();
-        } catch (_) {
-          doc.save(fileName);
-        }
-        setTimeout(() => {
-          URL.revokeObjectURL(url);
-          iframe.remove();
-        }, 60000);
-      }, 350);
-    };
+    const w = window.open(url, "_blank");
+    setTimeout(() => {
+      try { w && w.print(); } catch (_) {}
+    }, 500);
     return;
   }
 
@@ -58,8 +79,6 @@ async function outputPdf(doc, fileName, action = "save") {
         return;
       }
     } catch (_) {}
-    await outputPdf(doc, fileName, "print");
-    return;
   }
 
   doc.save(fileName);
