@@ -12,6 +12,7 @@
     "apk": "cd android && ./gradlew assembleDebug --no-daemon"
   },
   "dependencies": {
+    "@capacitor-community/file-opener": "^8.0.1",
     "@capacitor/android": "latest",
     "@capacitor/core": "latest",
     "@capacitor/filesystem": "^8.1.2",
