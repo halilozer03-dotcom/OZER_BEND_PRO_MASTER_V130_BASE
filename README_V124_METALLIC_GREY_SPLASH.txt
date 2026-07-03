@@ -1,0 +1,1 @@
+V124: Altın renkler kaldırıldı. Metalik gri tonları uygulandı. Splash ekranında yalnızca mevcut logo 4 saniye gösterilir. Kaynak torcu, yükleniyor yazısı ve ek animasyonlar kaldırıldı. 2D/3D/h hesap motoruna dokunulmadı.
