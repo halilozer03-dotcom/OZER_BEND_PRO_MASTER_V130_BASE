@@ -147,7 +147,7 @@ export async function createPdf({ data, result, lang, action = "save" }) {
 
   if (isLProfile) {
     const cx = 112, cy = 145;
-    const scale = Math.min(1.4, 100 / Math.max(1, A), 70 / Math.max(1, B));
+      const scale = Math.min(1.26, 90 / Math.max(1, A), 63 / Math.max(1, B));
     const ax = cx + A * scale;
     const ay = cy;
     const theta = (180 - Math.max(15, Math.min(180, angle))) * Math.PI / 180;
@@ -201,9 +201,9 @@ export async function createPdf({ data, result, lang, action = "save" }) {
     doc.line(x - 23, y, x - 23, y - h);
     doc.line(x - 27, y, x - 19, y);
     doc.line(x - 27, y - h, x - 19, y - h);
-    doc.text(`${B.toFixed(2)}`, x - 43, y - h / 2 + 2);
+    doc.text(`${D.toFixed(2)}`, x - 43, y - h / 2 + 2);
     doc.setTextColor(...red);
-    doc.text("B", x - 54, y - h / 2 + 2);
+    doc.text("D", x - 54, y - h / 2 + 2);
 
     doc.setTextColor(...ink);
     doc.line(x + w + 23, y, x + w + 23, y - h);
@@ -225,9 +225,9 @@ export async function createPdf({ data, result, lang, action = "save" }) {
     doc.line(x + w - ayak, y + 15, x + w, y + 15);
     doc.line(x + w - ayak, y + 10, x + w - ayak, y + 20);
     doc.line(x + w, y + 10, x + w, y + 20);
-    doc.text(`${D.toFixed(2)}`, x + w - ayak / 2, y + 13, { align: "center" });
+    doc.text(`${B.toFixed(2)}`, x + w - ayak / 2, y + 13, { align: "center" });
     doc.setTextColor(...red);
-    doc.text("D", x + w - ayak / 2, y + 25, { align: "center" });
+    doc.text("B", x + w - ayak / 2, y + 25, { align: "center" });
 
     doc.setTextColor(...ink);
     doc.setFontSize(10);
