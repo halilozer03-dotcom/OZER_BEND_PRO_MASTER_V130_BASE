@@ -12,16 +12,13 @@
     "apk": "cd android && ./gradlew assembleDebug --no-daemon"
   },
   "dependencies": {
-    "@capacitor-community/file-opener": "^8.0.1",
     "@capacitor/android": "latest",
     "@capacitor/core": "latest",
-    "@capacitor/filesystem": "^8.1.2",
-    "@capacitor/share": "^8.0.1",
     "@vitejs/plugin-react": "latest",
-    "jspdf": "latest",
+    "vite": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "vite": "latest"
+    "jspdf": "latest"
   },
   "devDependencies": {
     "@capacitor/cli": "latest"
